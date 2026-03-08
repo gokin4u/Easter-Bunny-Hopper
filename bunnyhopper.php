@@ -152,9 +152,8 @@ function bunnyhopper_coupons_field_render() {
     echo '<div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccd0d4; padding: 10px; background: #fff; border-radius: 4px;">';
     foreach ( $coupons as $coupon ) {
         $coupon_title = $coupon->post_title;
-        $checked = in_array( $coupon_title, $selected_coupons, true ) ? 'checked="checked"' : '';
         echo "<label style='display:block; margin-bottom: 6px;'>";
-        echo '<input type="checkbox" name="bunnyhopper_settings[bunnyhopper_coupons_field][]" value="' . esc_attr( $coupon_title ) . '" ' . $checked . ' /> ';
+        echo '<input type="checkbox" name="bunnyhopper_settings[bunnyhopper_coupons_field][]" value="' . esc_attr( $coupon_title ) . '" ' . checked( in_array( $coupon_title, $selected_coupons, true ), true, false ) . ' /> ';
         echo esc_html( $coupon_title );
         echo "</label>";
     }
