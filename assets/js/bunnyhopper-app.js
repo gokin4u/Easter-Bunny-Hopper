@@ -59,7 +59,17 @@
 
             if (physics.current.eggs.length > 80) {
                 const oldEgg = physics.current.eggs.shift();
-                if (oldEgg.el && oldEgg.el.parentNode) oldEgg.el.remove();
+                if (oldEgg && oldEgg.el) {
+                    try {
+                        if (oldEgg.el.parentNode === eggContainerRef.current) {
+                            eggContainerRef.current.removeChild(oldEgg.el);
+                        } else if (oldEgg.el.parentNode) {
+                            oldEgg.el.remove();
+                        }
+                    } catch (e) {
+                        // Silent catch for DOM inconsistencies
+                    }
+                }
             }
         };
 
@@ -426,6 +436,19 @@
         );
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('bunnyhopper-root'));
-    root.render(<BunnyHopperApp />);
+    // Safe initialization to prevent double-roots in Playground/Dynamic environments
+    const initApp = () => {
+        const rootElement = document.getElementById('bunnyhopper-root');
+        if (rootElement && !window.bunnyHopperInitialized) {
+            window.bunnyHopperInitialized = true;
+            const root = ReactDOM.createRoot(rootElement);
+            root.render(<BunnyHopperApp />);
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
 })();
