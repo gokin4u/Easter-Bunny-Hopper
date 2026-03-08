@@ -1,0 +1,9 @@
+# WordPress Plugin Development .gitignore
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+.git/
+node_modules/
+.vscode/
+.idea/
