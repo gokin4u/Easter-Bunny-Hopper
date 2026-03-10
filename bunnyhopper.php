@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Easter Bunny Hopper
- * Description: An interactive, physics-based bunny that rewards users with WooCommerce discount codes.
- * Version: 2.0.0
- * Author: gokin.pro & kreatywnet.marketing
- * Author URI: https://kreatywnet.marketing
- * Text Domain: easter-bunny-hopper
- * Domain Path: /languages
- * License: GPLv2 or later
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Plugin Name:       Easter Bunny Hopper
+ * Description:       An interactive, physics-based bunny that rewards users with WooCommerce discount codes.
+ * Version:           2.0.0
+ * Author:            gokin.pro & kreatywnet.marketing
+ * Author URI:        https://kreatywnet.marketing
+ * Text Domain:       easter-bunny-hopper
+ * Domain Path:       /languages
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
