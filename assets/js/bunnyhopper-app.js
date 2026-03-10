@@ -5,6 +5,8 @@
         ? window.BUNNYHOPPER_GREETINGS 
         : ["Hop hop! 🐰"];
 
+    const HAS_PROMO_CODES = window.BUNNYHOPPER_PROMO_CODES && window.BUNNYHOPPER_PROMO_CODES.length > 0;
+
     function BunnyHopperApp() {
         const bunnyRef = useRef(null);
         const bodyRef = useRef(null);
@@ -75,14 +77,14 @@
 
         // Promo trigger logic
         const triggerPromo = () => {
+            if (!HAS_PROMO_CODES) return;
+            
             isCodeRevealedRef.current = true;
             setShowPromo(true);
             
-            let selectedCode = "BUNNY2026";
-            if (window.BUNNYHOPPER_PROMO_CODES && window.BUNNYHOPPER_PROMO_CODES.length > 0) {
-                const randomIndex = Math.floor(Math.random() * window.BUNNYHOPPER_PROMO_CODES.length);
-                selectedCode = window.BUNNYHOPPER_PROMO_CODES[randomIndex];
-            }
+            const randomIndex = Math.floor(Math.random() * window.BUNNYHOPPER_PROMO_CODES.length);
+            const selectedCode = window.BUNNYHOPPER_PROMO_CODES[randomIndex];
+            setCurrentPromoCode(selectedCode);
             setCurrentPromoCode(selectedCode);
             
             const p = physics.current;
@@ -257,7 +259,7 @@
             
             spawnEgg(p.x, p.y - 40, (Math.random() - 0.5) * 12, -8 - Math.random() * 5);
 
-            if (!isCodeRevealedRef.current) {
+            if (!isCodeRevealedRef.current && HAS_PROMO_CODES) {
                 clickCount.current += 1;
                 
                 if (clickCount.current >= 3) {
@@ -266,6 +268,10 @@
                     setIsHovered(true);
                     setGreeting(clickCount.current === 2 ? "One more! 🎁" : "Whoa! 🎢"); 
                 }
+            } else if (!isCodeRevealedRef.current && !HAS_PROMO_CODES) {
+                // If no promos, just show random greeting on click without counting
+                setIsHovered(true);
+                setGreeting(BUNNY_GREETINGS[Math.floor(Math.random() * BUNNY_GREETINGS.length)]);
             }
         };
 
