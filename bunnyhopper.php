@@ -354,8 +354,8 @@ function bunnyhopper_enqueue_frontend_scripts() {
     // Enqueue WP's built-in React (wp-element)
     wp_enqueue_script( 'bunnyhopper-app', plugins_url( 'assets/js/bunnyhopper-app.js', __FILE__ ), array( 'wp-element' ), '2.0.0', true );
 
-    // Add Babel transpilation type to the script tag
-    add_filter( 'script_loader_tag', 'bunnyhopper_add_babel_type', 10, 3 );
+    // Add Babel transpilation type to the script tag with high priority
+    add_filter( 'script_loader_tag', 'bunnyhopper_add_babel_type', 999, 3 );
 
     // Pass data to the script
     wp_localize_script( 'bunnyhopper-app', 'BUNNYHOPPER_PROMO_CODES', array_map( 'esc_js', $coupon_codes ) );
@@ -367,7 +367,10 @@ function bunnyhopper_enqueue_frontend_scripts() {
  */
 function bunnyhopper_add_babel_type( $tag, $handle, $src ) {
     if ( 'bunnyhopper-app' === $handle ) {
-        return preg_replace( '/(\s)src=/', '$1type="text/babel" src=', $tag );
+        // Remove any existing type attribute to avoid conflicts
+        $tag = preg_replace( '/\stype=[\'"][^\'"]*[\'"]/', '', $tag );
+        // Add text/babel type
+        return str_replace( '<script ', '<script type="text/babel" ', $tag );
     }
     return $tag;
 }
