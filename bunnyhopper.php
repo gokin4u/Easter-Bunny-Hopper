@@ -390,4 +390,4 @@ add_action( 'wp_footer', function() {
         echo 'Easter Bunny Hopper – <a href="https://kreatywnet.marketing" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: none; font-weight: 600;">Created by gokin.pro & kreatywnet.marketing</a>';
         echo '</div>';
     }
-}, 20 );
+}, 15 );
