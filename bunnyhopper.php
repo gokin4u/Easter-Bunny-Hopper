@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Easter Bunny Hopper
  * Description:       An interactive, physics-based bunny that rewards users with WooCommerce discount codes.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            gokin.pro & kreatywnet.marketing
  * Author URI:        https://kreatywnet.marketing
  * Text Domain:       easter-bunny-hopper
@@ -300,7 +300,7 @@ function bunnyhopper_options_page_html() {
 
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
             <h2 style="margin: 0;"><?php esc_html_e( 'Configure Bunny Persistence 🐇', 'easter-bunny-hopper' ); ?></h2>
-            <span style="background: #10b981; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase;">v2.0.1</span>
+            <span style="background: #10b981; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase;">v2.0.2</span>
         </div>
 
         <form action="options.php" method="post" style="background: #fff; border: 1px solid #ccd0d4; padding: 20px; border-radius: 4px; max-width: 800px;">
@@ -352,7 +352,7 @@ function bunnyhopper_enqueue_frontend_scripts() {
     wp_enqueue_script( 'bunnyhopper-babel', plugins_url( 'assets/js/babel.min.js', __FILE__ ), array(), '7.24.0', true );
 
     // Enqueue WP's built-in React (wp-element)
-    wp_enqueue_script( 'bunnyhopper-app', plugins_url( 'assets/js/bunnyhopper-app.js', __FILE__ ), array( 'wp-element' ), '2.0.1', true );
+    wp_enqueue_script( 'bunnyhopper-app', plugins_url( 'assets/js/bunnyhopper-app.js', __FILE__ ), array( 'wp-element' ), '2.0.2', true );
 
     // Add Babel transpilation type to the script tag with high priority
     add_filter( 'script_loader_tag', 'bunnyhopper_add_babel_type', 999, 3 );

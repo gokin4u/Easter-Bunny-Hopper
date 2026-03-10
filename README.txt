@@ -1,6 +1,6 @@
 === Easter Bunny Hopper ===
 Contributors: easter-bunny-hopper
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
@@ -38,6 +38,10 @@ Yes, the coupon distribution feature requires WooCommerce to be installed and ac
 Absolutely! You can set custom greetings in the plugin settings.
 
 == Changelog ==
+
+= 2.0.2 =
+* Forced cache refresh for JavaScript assets.
+* Removed default hardcoded promo code from logic.
 
 = 2.0.1 =
 * Fixed version mismatch error on WP.org.
