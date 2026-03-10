@@ -102,6 +102,14 @@ function bunnyhopper_settings_init() {
         'bunnyhopper_plugin_page',
         'bunnyhopper_plugin_page_section'
     );
+
+    add_settings_field(
+        'bunnyhopper_homepage_field',
+        esc_html__( 'Show on Homepage', 'easter-bunny-hopper' ),
+        'bunnyhopper_homepage_field_render',
+        'bunnyhopper_plugin_page',
+        'bunnyhopper_plugin_page_section'
+    );
 }
 
 /**
@@ -121,6 +129,7 @@ function bunnyhopper_sanitize_settings( $input ) {
     }
 
     $sanitized['bunnyhopper_show_credit_field'] = isset( $input['bunnyhopper_show_credit_field'] ) ? 1 : 0;
+    $sanitized['bunnyhopper_homepage_field'] = isset( $input['bunnyhopper_homepage_field'] ) ? 1 : 0;
 
     return $sanitized;
 }
@@ -187,6 +196,18 @@ function bunnyhopper_show_credit_field_render() {
     ?>
     <input type="checkbox" name="bunnyhopper_settings[bunnyhopper_show_credit_field]" value="1" <?php checked( 1, $val ); ?> />
     <span class="description"><?php esc_html_e( 'Show "Created by gokin.pro" credit in the footer of your website. (Opt-in required by WP.org guidelines)', 'easter-bunny-hopper' ); ?></span>
+    <?php
+}
+
+/**
+ * Render homepage visibility field
+ */
+function bunnyhopper_homepage_field_render() {
+    $options = get_option( 'bunnyhopper_settings' );
+    $val = isset( $options['bunnyhopper_homepage_field'] ) ? $options['bunnyhopper_homepage_field'] : 1;
+    ?>
+    <input type="checkbox" name="bunnyhopper_settings[bunnyhopper_homepage_field]" value="1" <?php checked( 1, $val ); ?> />
+    <span class="description"><?php esc_html_e( 'If unchecked, the bunny will be hidden on the front page and homepage.', 'easter-bunny-hopper' ); ?></span>
     <?php
 }
 
@@ -310,6 +331,13 @@ function bunnyhopper_enqueue_frontend_scripts() {
     }
 
     $options = get_option( 'bunnyhopper_settings' );
+    $show_on_homepage = isset( $options['bunnyhopper_homepage_field'] ) ? (bool)$options['bunnyhopper_homepage_field'] : true;
+
+    if ( ! $show_on_homepage && ( is_front_page() || is_home() ) ) {
+        return;
+    }
+
+    $options = get_option( 'bunnyhopper_settings' );
     $coupon_codes = isset( $options['bunnyhopper_coupons_field'] ) ? (array) $options['bunnyhopper_coupons_field'] : array();
 
     $default_greetings = "Happy Easter! 🌿\nJoyful Spring! 🐣\nYou caught me! 🐰\nSpring energy! ✨\n*Petting sounds* 🥰\nClick me 3 times! 🎁\nLooking for gifts? 🎁\nHop hop! 🐇\nSmells like spring! 🌷";
@@ -339,16 +367,22 @@ function bunnyhopper_enqueue_frontend_scripts() {
  */
 function bunnyhopper_add_babel_type( $tag, $handle, $src ) {
     if ( 'bunnyhopper-app' === $handle ) {
-        return str_replace( ' src', ' type="text/babel" src', $tag );
+        return preg_replace( '/(\s)src=/', '$1type="text/babel" src=', $tag );
     }
     return $tag;
 }
 
 // Ensure the root container and credit link are rendered in the footer
 add_action( 'wp_footer', function() {
+    $options = get_option( 'bunnyhopper_settings' );
+    $show_on_homepage = isset( $options['bunnyhopper_homepage_field'] ) ? (bool)$options['bunnyhopper_homepage_field'] : true;
+
+    if ( ! $show_on_homepage && ( is_front_page() || is_home() ) ) {
+        return;
+    }
+
     echo '<div id="bunnyhopper-root"></div>';
     
-    $options = get_option( 'bunnyhopper_settings' );
     $show_credit = isset( $options['bunnyhopper_show_credit_field'] ) ? (bool)$options['bunnyhopper_show_credit_field'] : false;
 
     if ( $show_credit ) {
@@ -356,4 +390,4 @@ add_action( 'wp_footer', function() {
         echo 'Easter Bunny Hopper – <a href="https://kreatywnet.marketing" target="_blank" rel="noopener noreferrer" style="color: #94a3b8; text-decoration: none; font-weight: 600;">Created by gokin.pro & kreatywnet.marketing</a>';
         echo '</div>';
     }
-}, 100 );
+}, 20 );

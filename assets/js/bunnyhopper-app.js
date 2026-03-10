@@ -440,6 +440,7 @@
     const initApp = () => {
         const rootElement = document.getElementById('bunnyhopper-root');
         if (rootElement && !window.bunnyHopperInitialized) {
+            console.log("Easter Bunny Hopper: Initializing...");
             window.bunnyHopperInitialized = true;
             const root = ReactDOM.createRoot(rootElement);
             root.render(<BunnyHopperApp />);
