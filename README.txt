@@ -1,6 +1,6 @@
 === Easter Bunny Hopper ===
 Contributors: easter-bunny-hopper
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
@@ -39,18 +39,19 @@ Absolutely! You can set custom greetings in the plugin settings.
 
 == Changelog ==
 
+= 2.0.1 =
+* Fixed version mismatch error on WP.org.
+* Fixed React DOM Exception in Playground.
+* Fixed JSX SyntaxError by forcing Babel transpilation.
+* Added "Show on Homepage" toggle in settings.
+* Improved security and asset loading reliability.
+
 = 2.0.0 =
 * Major rebranding to Easter Bunny Hopper (slug: easter-bunny-hopper).
 * Updated all function prefixes and text domains for WP.org compliance.
-* Updated version to 2.0.0.
 * Added opt-in setting for footer credit (Guideline 10).
 
-= 1.5.1 =
-* Renamed plugin to WooHopper.
-* Standardized all strings to English.
-* Improved WordPress.org compliance.
-* Added physics-based egg spawning.
-
 == Screenshots ==
+
 1. The Easter Bunny Hopper in action.
 2. The admin settings page.
